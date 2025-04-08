@@ -23,7 +23,7 @@ import java.time.Duration;
          driver = new FirefoxDriver();
          driver.get("https:/demo.nopcommerce.com/register?returnUrl=%2F");
          driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-         action = new Actions(driver);
+         action = new Actions(driver);--
 
      }
 
