@@ -22,7 +22,7 @@ public class Topic_13_Button {
     }
 
     @Test
-    public void TC_01_Fahasha() {
+    public void TC_01Topic_13_Button_Fahasha() {
         driver.get("https://www.fahasa.com/customer/account/create");
         driver.findElement(By.cssSelector("li.popup-login-tab-login")).click();
 
