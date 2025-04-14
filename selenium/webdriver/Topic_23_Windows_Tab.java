@@ -133,6 +133,30 @@ import java.util.Set;
 
          Assert.assertEquals(driver.findElement(successMessage).getText(), "The comparison list was cleared.");
      }
+
+     @Test
+     public void TC_15_Window () {
+         driver.get("https://dictionary.cambridge.org/vi/");
+         driver.findElement(By.xpath("//header//span[text() = 'Đăng nhập']")).click();
+         String cambridgeWindow = driver.getWindowHandle();
+         switchToAnotherWindowById(cambridgeWindow);
+         String searchKey = "automation";
+
+         driver.findElement(By.xpath("//form//input[@value = 'Log in']")).click();
+         Assert.assertEquals(driver.findElement(By.xpath("//input[@placeholder ='Email *']//following-sibling::span")).getText(),"This field is required");
+         Assert.assertEquals(driver.findElement(By.xpath("//input[@placeholder ='Password *']//following-sibling::span")).getText(),"This field is required");
+
+         driver.close();
+         driver.switchTo().window(cambridgeWindow);
+
+         driver.findElement(By.xpath("//input[@name = 'q']")).sendKeys(searchKey);
+
+         driver.findElement(By.xpath("//button[@aria-label = 'Search']")).click();
+
+         Assert.assertEquals(driver.findElement(By.cssSelector("div.di-title")).getText(),searchKey);
+
+     }
+
          @AfterClass
         public void closeBroswer() {
          //driver.quit();
