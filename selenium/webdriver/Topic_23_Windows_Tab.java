@@ -102,9 +102,39 @@ import java.util.Set;
          ;
      }
 
+     @Test
+     public void TC_14_Window() {
+         driver.get("https://live.techpanda.org/");
+         driver.findElement(By.xpath("//a[text() = 'Mobile']")).click();
+         driver.findElement(By.xpath("//a[@title = 'Xperia']/following-sibling::div//a[@class = 'link-compare']")).click();
 
-     @AfterClass
-     public void closeBroswer() {
+         By successMessage = By.cssSelector("li.success-msg ul li span");
+         Assert.assertEquals(driver.findElement(successMessage).getText(), "The product Sony Xperia has been added to comparison list.");
+
+         driver.findElement(By.xpath("//a[@title = 'Samsung Galaxy']/following-sibling::div//a[@class = 'link-compare']")).click();
+
+         Assert.assertEquals(driver.findElement(successMessage).getText(), "The product Samsung Galaxy has been added to comparison list.");
+
+         driver.findElement(By.xpath("//button[@title = \"Compare\"]")).click();
+
+         String mobileWindowId = driver.getWindowHandle();
+
+         switchToAnotherWindowById(mobileWindowId);
+
+         Assert.assertEquals(driver.getTitle(), "Products Comparison List - Magento Commerce");
+
+         driver.close();
+
+         driver.switchTo().window(mobileWindowId);
+
+         driver.findElement(By.xpath("//a[text() = 'Clear All']")).click();
+
+         driver.switchTo().alert().accept();
+
+         Assert.assertEquals(driver.findElement(successMessage).getText(), "The comparison list was cleared.");
+     }
+         @AfterClass
+        public void closeBroswer() {
          //driver.quit();
      }
 
